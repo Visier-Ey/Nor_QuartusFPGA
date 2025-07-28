@@ -11,3 +11,7 @@
 *.aocx
 *.summary
 *.raw
+output_files/
+db/
+incremental_db/
+simulation/
