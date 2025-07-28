@@ -1,0 +1,10 @@
+vsim -i -l msim_transcript 5
+# vsim -i -l msim_transcript 5 
+# Start time: 22:41:09 on Apr 13,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Error: (vopt-11) Could not find work.5.
+# Optimization failed
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=1, Warnings=0.
+# Error loading design
+# End time: 22:41:10 on Apr 13,2025, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 7

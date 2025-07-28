@@ -1,0 +1,1 @@
+Info (10281): Verilog HDL Declaration information at _NCO_Variant.sv(6): object "BASE_PHASE" differs only in case from object "base_phase" in the same scope File: /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/_NCO_Variant.sv Line: 6

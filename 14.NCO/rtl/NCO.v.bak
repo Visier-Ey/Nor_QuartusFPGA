@@ -1,0 +1,51 @@
+module NCO#(
+  FCW = 6554, // * Frequency Control Word
+   // ! FCW=fclk/​fout​×2N​
+) (
+    input sys_clk,
+    input sys_rst_n,
+    output [7:0] da_data,
+    output da_clk
+);
+
+  // ! PLL
+  wire locked;
+  wire clk_100m;
+  assign rst = sys_rst_n & locked;
+
+  pll	pll_inst (
+	.areset ( ~sys_rst_n ),
+	.inclk0 ( sys_clk ),
+	.c0 ( clk_100m ),
+	.locked ( locked )
+	);
+
+
+  // ! NOC output
+  wire nco_clk;
+  wire [7:0] _rd_data;
+
+  _NCO noc_u (
+    .clk        ( clk_100m ),
+    .reset_n    ( rst ),
+    .phi_inc_i  ( FCW ),
+    .sin_out    ( _rd_data ),
+    .out_valid  ( nco_vaild ),
+    .nco_clk    ( nco_clk )
+  );
+
+  // ! DA Output
+  wire [7:0] _da_data;
+  assign da_data = _da_data;
+  assign da_clk = nco_vaild & nco_clk;
+
+  da_wave_send u_da_wave_send(
+    .clk         (clk_100m  ), 
+    .rst_n       (rst    ),
+    .rd_data     (_rd_data  ),
+    .rd_addr     (),
+    .da_clk      (),  
+    .da_data     (_da_data)
+    );
+
+endmodule

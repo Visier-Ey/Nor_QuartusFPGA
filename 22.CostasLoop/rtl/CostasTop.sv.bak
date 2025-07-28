@@ -1,0 +1,73 @@
+module CostasTop(
+    input            sys_clk  ,
+    input            sys_rst_n,
+    
+    //*UART端口    
+    input            uart_rxd ,
+    output           uart_txd, 
+
+    //*AD端口 1
+    input [7:0] ad_data,  
+    output [7:0] da_data,    
+    output da_clk,         
+    output ad_clk,
+
+    //*AD端口 2
+    input [7:0] ad_data_2,  
+    output [7:0] da_data_2,    
+    output da_clk_2,         
+    output ad_clk_2
+);
+
+
+//*****************************************************
+//**                    main code
+//*****************************************************
+
+// ! ============================= PLL Here =============================
+
+wire locked;
+wire clk_100m;
+wire clk_30m;
+wire clk_400m;
+pll pll_inst (
+    .areset ( ~sys_rst_n ), 
+    .inclk0 ( sys_clk ),
+    .c0 ( clk_100m ),
+    .c1 ( clk_30m ),
+    .c2 ( clk_400m ),
+    .locked ( locked )
+);
+
+
+assign rst = sys_rst_n & locked;
+
+
+
+// ! ============================= Costas Here =============================
+
+reg [31:0] costas_freq_inc; 
+
+costas costas_inst (
+    .sys_clk(clk_30m),
+    .sys_rst_n(rst),
+    .ad_data(ad_data),  
+    .da_data(da_data),  
+    .da_clk(da_clk),    
+    .ad_clk(ad_clk),    
+    .initial_freq(costas_freq_inc)
+);  
+
+
+// ! ============================= Logic Here =============================
+
+@ (posedge clk_30m or negedge rst) begin
+    if (!rst) begin
+        costas_freq_inc <= 32'd14316557 ;
+    end else begin
+    end
+
+    end
+
+
+endmodule

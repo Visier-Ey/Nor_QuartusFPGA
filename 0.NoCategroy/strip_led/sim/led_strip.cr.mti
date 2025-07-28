@@ -1,0 +1,15 @@
+/home/visier/FPGA_Porject/VisierCustom/strip_led/rtl/flow_led.v {1 {vlog -work work -vopt -stats=none /home/visier/FPGA_Porject/VisierCustom/strip_led/rtl/flow_led.v
+Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+-- Compiling module flow_led
+
+Top level modules:
+	flow_led
+
+} {} {}} /home/visier/FPGA_Porject/VisierCustom/strip_led/sim/tb/flow_led_tb.v {1 {vlog -work work -vopt -stats=none /home/visier/FPGA_Porject/VisierCustom/strip_led/sim/tb/flow_led_tb.v
+Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+-- Compiling module flow_led_tb
+
+Top level modules:
+	flow_led_tb
+
+} {} {}}

@@ -1,0 +1,114 @@
+module uart_recv (
+    input clk,
+    input rst_n,
+
+    input uart_rxd,//* data in port
+    output reg[7:0] uart_rx_data,
+    output reg uart_rx_done
+);
+ //! parameter define
+parameter CLK_FREQ = 50000000;               //*SYS CLOCK
+parameter UART_BPS = 115200  ;               //*SERIAL PORT BAUD RATE
+localparam BAUD_CNT_MAX = CLK_FREQ/UART_BPS; //*EACH BIT TIME WITH SYS CLOCK
+
+reg [3:0] rx_cnt;    //*RECEIVE DATA COUNTER
+reg [15:0] baud_cnt;   //*BAUD RATE COUNTER
+reg rx_flag;    //*RECEIVE PROCESS FLAG SIGNAL
+reg uart_rxd_d0;
+reg uart_rxd_d1; //* negedge uart_rxd capture
+reg uart_rxd_d2;
+reg [7:0] rx_data_t; //*RECEIVE DATA TEMP
+
+wire start_en;
+
+assign start_en = uart_rxd_d2 & (~uart_rxd_d1) & (~rx_flag);
+
+
+//! UART DATA START FLAG
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+        uart_rxd_d0 <= 1'b0;
+        uart_rxd_d1 <= 1'b0;
+        uart_rxd_d2 <= 1'b0;
+    end
+    else begin
+        uart_rxd_d0 <= uart_rxd;
+        uart_rxd_d1 <= uart_rxd_d0;
+        uart_rxd_d2 <= uart_rxd_d1;
+    end
+end
+
+//! UART DONE SIGNAL
+always @(posedge clk or negedge rst_n) begin
+    if(!rst_n) 
+        rx_flag <= 1'b0;
+    else if(start_en)    
+        rx_flag <= 1'b1; 
+    else if((rx_cnt == 4'd9) && (baud_cnt == BAUD_CNT_MAX/2 - 1'b1))
+        rx_flag <= 1'b0;
+    else
+        rx_flag <= rx_flag;
+end
+
+//! UART ONE BIT DONE COUNTER
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) baud_cnt <= 0;
+    
+    else if (rx_flag) begin
+        if (baud_cnt == BAUD_CNT_MAX-1) baud_cnt <= 0;
+        else baud_cnt <= baud_cnt + 1;
+    end
+    else baud_cnt <= 0;
+    
+end
+
+//! RECEIVE DATA COUNTER
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) rx_cnt <= 0;
+
+    else if (rx_flag) begin
+        if (baud_cnt == BAUD_CNT_MAX-1) begin
+            if (rx_cnt == 9) rx_cnt <= 0;
+            else rx_cnt <= rx_cnt + 1;
+        end
+    end
+    else rx_cnt <= 0;
+    
+end
+
+//! RECEIVE DATA AND STORE IT TO TEMP
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) 
+        rx_data_t <= 0;
+    else if (rx_flag) begin
+        if (baud_cnt == BAUD_CNT_MAX/2-1) begin
+            case (rx_cnt)
+                1: rx_data_t[0] <= uart_rxd_d2; //*START BIT
+                2: rx_data_t[1] <= uart_rxd_d2;
+                3: rx_data_t[2] <= uart_rxd_d2;
+                4: rx_data_t[3] <= uart_rxd_d2;
+                5: rx_data_t[4] <= uart_rxd_d2;
+                6: rx_data_t[5] <= uart_rxd_d2;
+                7: rx_data_t[6] <= uart_rxd_d2;
+                8: rx_data_t[7] <= uart_rxd_d2; //*STOP BIT
+            endcase
+        end
+    end
+    else rx_data_t <= 0;
+end
+
+//! UART DATA OUTPUT
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+        uart_rx_data <= 0;
+        uart_rx_done <= 1'b0;
+    end
+    else if (rx_cnt == 9 && baud_cnt == BAUD_CNT_MAX/2 - 1'b1) begin
+        uart_rx_data <= rx_data_t;
+        uart_rx_done <= 1'b1;
+    end
+    else begin
+        uart_rx_done <= 1'b0;
+    end
+end
+endmodule

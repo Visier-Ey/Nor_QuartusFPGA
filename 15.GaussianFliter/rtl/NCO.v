@@ -1,0 +1,59 @@
+module NCO # (
+   parameter FCW = 6554  // * Frequency Control Word
+   // * 10M here
+   // ! FCW=​fout​×2^N/fclk
+) (
+    input sys_clk,
+    input sys_rst_n,
+    output [7:0] da_data,
+    output da_clk
+);
+
+  // ! PLL
+  wire locked;
+  wire clk_100m;
+  wire clk_200m;
+  wire clk_400m;
+  assign rst = sys_rst_n & locked;
+
+
+  pll	pll_inst (
+	.areset ( ~sys_rst_n ),
+	.inclk0 ( sys_clk ),
+	.c0 ( clk_100m ),
+  .c1 ( clk_200m ),
+  .c2 ( clk_400m ),
+	.locked ( locked )
+	);
+
+
+  // ! NOC output
+  wire nco_clk;
+  wire nco_vaild;
+  assign nco_clk = clk_100m;
+  // # DA Output
+  wire [7:0] _da_data;
+
+  _NCO noc_u (
+    .clk        ( nco_clk ),
+    .reset_n    ( rst ),
+    .phi_inc_i  ( FCW ),
+    .sin_out    ( _da_data ),
+    .out_valid  ( nco_vaild )
+  );
+
+  // ! Gaussian filter
+  wire [7:0] _da_data_flitered;
+  gaussian_filter gf (
+    .clk        ( clk_400m ),
+    .rst_n      ( rst ),
+    .data_in    ( _da_data ),
+    .filtered_out( _da_data_flitered )
+  );
+
+  // ! DA output
+  assign da_data = _da_data_flitered;
+  assign da_clk = nco_vaild & nco_clk;
+
+
+endmodule

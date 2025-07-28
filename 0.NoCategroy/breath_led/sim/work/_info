@@ -1,0 +1,80 @@
+m255
+K4
+z2
+!s11f vlog 2024.3 2024.09, Sep 10 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+d/home/visier/FPGA_Porject/VisierCustom/breath_led/par/simulation/questa
+vbreath_led
+2/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/breath_led.v
+Z0 !s110 1744555216
+!i10b 1
+!s100 fU[PLoG<4Q6DSWD<k>NkW3
+IP?:?jf_H0A<82Qa`kGEBM3
+Z1 d/home/visier/FPGA_Porject/VisierCustom/breath_led/sim
+w1744551920
+8/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/breath_led.v
+F/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/breath_led.v
+!i122 0
+L0 1 39
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OL;L;2024.3;79
+r1
+!s85 0
+31
+Z4 !s108 1744555216.000000
+!s107 /home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/breath_led.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/breath_led.v|
+!i113 0
+Z5 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z6 tCvgOpt 0
+vcount
+2/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/count.v
+R0
+!i10b 1
+!s100 I8mC2llXSiGXYBAkbNcZ>0
+IeD]MdHWnH2HjLTRUUikN_0
+R1
+w1744550706
+8/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/count.v
+F/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/count.v
+!i122 1
+L0 1 25
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 /home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/count.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/count.v|
+!i113 0
+R5
+R6
+vtop_breath_led
+2/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/top_breath_led.v
+R0
+!i10b 1
+!s100 YPe2FbW5O_K`]9A4[L5ee2
+In]I`B33cEhZ3^F=fO07KO0
+R1
+w1744549248
+8/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/top_breath_led.v
+F/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/top_breath_led.v
+!i122 2
+L0 1 20
+R2
+R3
+r1
+!s85 0
+31
+R4
+!s107 /home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/top_breath_led.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|/home/visier/FPGA_Porject/VisierCustom/breath_led/rtl/top_breath_led.v|
+!i113 0
+R5
+R6

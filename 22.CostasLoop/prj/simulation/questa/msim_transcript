@@ -1,0 +1,169 @@
+# //  Questa Intel Starter FPGA Edition-64
+# //  Version 2024.3 linux_x86_64 Sep 10 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# do CostatsLoop_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Questa Intel Starter FPGA Edition-64 vmap 2024.3 Lib Mapping Utility 2024.09 Sep 10 2024
+# vmap work rtl_work 
+# Copying /home/visier/altera_lite/24.1std/questa_fse/linux_x86_64/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -vlog01compat -work work +incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/ipcore/pll {/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/ipcore/pll/pll.v}
+# Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 11:39:23 on Jul 28,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/ipcore/pll" /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/ipcore/pll/pll.v 
+# -- Compiling module pll
+# 
+# Top level modules:
+# 	pll
+# End time: 11:39:23 on Jul 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/ipcore/rom {/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/ipcore/rom/rom_256x8b.v}
+# Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 11:39:23 on Jul 28,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/ipcore/rom" /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/ipcore/rom/rom_256x8b.v 
+# -- Compiling module rom_256x8b
+# 
+# Top level modules:
+# 	rom_256x8b
+# End time: 11:39:23 on Jul 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/db {/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/db/pll_altpll.v}
+# Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 11:39:23 on Jul 28,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/db" /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/db/pll_altpll.v 
+# -- Compiling module pll_altpll
+# 
+# Top level modules:
+# 	pll_altpll
+# End time: 11:39:23 on Jul 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl {/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/_NCO.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 11:39:23 on Jul 28,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl" /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/_NCO.sv 
+# -- Compiling module _NCO
+# 
+# Top level modules:
+# 	_NCO
+# End time: 11:39:23 on Jul 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl {/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/_NCO_Variant.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 11:39:23 on Jul 28,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl" /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/_NCO_Variant.sv 
+# -- Compiling module _NCO_Variant
+# 
+# Top level modules:
+# 	_NCO_Variant
+# End time: 11:39:23 on Jul 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl {/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/Costas.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 11:39:23 on Jul 28,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl" /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/Costas.sv 
+# -- Compiling module costas
+# 
+# Top level modules:
+# 	costas
+# End time: 11:39:23 on Jul 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl {/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/FIR.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 11:39:23 on Jul 28,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl" /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/FIR.sv 
+# -- Compiling module FIR
+# 
+# Top level modules:
+# 	FIR
+# End time: 11:39:23 on Jul 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl {/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/loop_filter.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 11:39:23 on Jul 28,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl" /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/loop_filter.sv 
+# -- Compiling module loop_filter
+# 
+# Top level modules:
+# 	loop_filter
+# End time: 11:39:23 on Jul 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl {/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/mixer.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 11:39:23 on Jul 28,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl" /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/mixer.sv 
+# -- Compiling module mixer
+# 
+# Top level modules:
+# 	mixer
+# End time: 11:39:23 on Jul 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl {/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/CostasTop.sv}
+# Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 11:39:23 on Jul 28,2025
+# vlog -reportprogress 300 -sv -work work "+incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl" /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/CostasTop.sv 
+# -- Compiling module CostasTop
+# 
+# Top level modules:
+# 	CostasTop
+# End time: 11:39:23 on Jul 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vlog -vlog01compat -work work +incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/../sim {/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/../sim/costas.v}
+# Questa Intel Starter FPGA Edition-64 vlog 2024.3 Compiler 2024.09 Sep 10 2024
+# Start time: 11:39:23 on Jul 28,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+/home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/../sim" /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/prj/../sim/costas.v 
+# -- Compiling module costas_tb
+# 
+# Top level modules:
+# 	costas_tb
+# End time: 11:39:23 on Jul 28,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneive_ver -L rtl_work -L work -voptargs="+acc"  costas
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneive_ver -L rtl_work -L work -voptargs=""+acc"" costas 
+# Start time: 11:39:23 on Jul 28,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10908) Some optimizations are turned off because the +acc switch is in effect.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.costas(fast)
+# Loading work.mixer(fast)
+# Loading work.FIR(fast)
+# Loading work.loop_filter(fast)
+# Loading work._NCO(fast)
+# Loading work.rom_256x8b(fast)
+# Loading altera_mf_ver.altsyncram(fast)
+# Loading altera_mf_ver.altsyncram_body(fast)
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES(fast)
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION(fast)
+# Loading work._NCO(fast__1)
+# Loading work._NCO_Variant(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (8) does not match connection size (16) for port 'fir_in'. The port definition is at: /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/FIR.sv(4).
+#    Time: 0 ps  Iteration: 0  Instance: /costas/fir_I File: /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/Costas.sv Line: 83
+# ** Warning: (vsim-3015) [PCDPC] - Port size (8) does not match connection size (16) for port 'fir_in'. The port definition is at: /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/FIR.sv(4).
+#    Time: 0 ps  Iteration: 0  Instance: /costas/fir_Q File: /home/visier/WorkSpace/FPGA_Porject/VisierCustom/22.CostasLoop/rtl/Costas.sv Line: 89
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# End time: 11:39:47 on Jul 28,2025, Elapsed time: 0:00:24
+# Errors: 0, Warnings: 3

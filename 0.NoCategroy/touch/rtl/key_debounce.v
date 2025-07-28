@@ -1,0 +1,42 @@
+module key_debounce (
+    input wire sys_clk,
+    input wire sys_rst_n,
+    input wire key,
+    output reg key_value, //* buffered key value
+    output reg key_flag //* key value flag
+);
+
+    reg [19:0] delay_cnt; //! Shaking delay
+    reg key_state;
+
+//! this part used to delay 2ms by 50MHz clock
+    always @(posedge sys_clk or negedge sys_rst_n) begin
+        if (!sys_rst_n) begin
+            delay_cnt <= 20'b0;
+            key_state <= 1'b1;
+        end else begin
+            key_state <= key;
+            if (key_state != key) begin
+                delay_cnt <= 20'd1000000;
+            end else if (delay_cnt > 0) begin
+                delay_cnt <= delay_cnt - 1;
+            end 
+        end
+    end
+
+//! this part deliver the key value to the output after delay
+    always @(posedge sys_clk or negedge sys_rst_n) begin
+        if (!sys_rst_n) begin
+            key_flag <= 1'b0;
+            key_value <= 1'b1;
+        end else begin
+            if (delay_cnt == 20'd1) begin
+                key_flag <= 1'b1;
+                key_value <= key;
+            end else begin
+                key_flag <= 1'b0;
+            end
+        end
+    end
+    
+endmodule

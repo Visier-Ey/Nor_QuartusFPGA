@@ -1,0 +1,35 @@
+module breath_led (
+    input sys_clk,
+    input sys_rst_n,
+    output [3:0] led,
+    input wire count_down;
+);
+    reg [9:0] pwm_max;
+    reg [9:0] pwm;
+    reg [9:0] cnt;
+    reg dir;
+
+    initial begin
+        led <= 4'b0000;
+        pwm <= 10'd0000;
+        pwm_max <= 10'd1000;
+        dir <= 1'b1;
+    end
+
+    //! count toggled each count_down
+    always @(posedge count_down) begin
+        if (dir) pwm <= pwm + 1;
+        else pwm <= pwm - 1;
+        if (pwm >= pwm_max) dir <= 1'b0;
+        else if (pwm <= 10'd0) dir <= 1'b1;
+    end
+
+    //! cnt correspond to pwm
+    always @(posedge sys_clk) begin
+        if (cnt<pwm) led <= 4'b1111;
+        else led <= 4'b0000;
+        if (cnt == pwm_max) cnt <= 0;
+        else cnt <= cnt + 1;
+    end
+    
+endmodule

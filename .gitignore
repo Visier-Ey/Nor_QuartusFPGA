@@ -1,0 +1,13 @@
+.git
+*.vcd
+*.wlf
+*.log
+*.rpt
+*.sdf
+*.map
+*.hex
+*.bin
+*.sof
+*.aocx
+*.summary
+*.raw

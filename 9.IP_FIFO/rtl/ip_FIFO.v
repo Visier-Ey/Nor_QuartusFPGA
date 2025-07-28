@@ -1,0 +1,78 @@
+module ip_FIFO (
+    input sys_clk,
+    input sys_rst_n
+);
+
+    //! PLL Interface
+
+    wire clk_out100m;
+    wire clk_out100m_180deg;
+    wire clk_out50m;
+    wire clk_out25m;
+
+    wire rst_n;
+    wire locked;
+
+    assign rst_n = sys_rst_n & locked;
+
+
+    //! FIFO Interface
+    wire rd_full;
+    wire rd_empty;
+    wire rd_req;
+    wire [7:0] rd_data;
+
+    wire wr_full;
+    wire wr_empty;
+    wire wr_req;
+    wire [7:0] wr_data;
+    
+    wire rd_usedw;
+    wire wr_usedw;
+
+
+    pll pll_inst (
+	.areset ( ~sys_rst_n ),
+	.inclk0 ( sys_clk ),
+	.c0 ( clk_out100m ),
+	.c1 ( clk_out100m_180deg ),
+	.c2 ( clk_out50m ),
+	.c3 ( clk_out25m ),
+	.locked ( locked )
+	);
+
+    FIFO_rd u_fifo_rd (
+        .clk(clk_out50m),
+        .rst_n(rst_n),
+        .rd_full(rd_full),
+        .rd_empty(rd_empty),
+        .rd_req(rd_req),
+        .rd_data(rd_data)
+    );
+
+    FIFO_wr u_fifo_wr (
+        .clk(clk_out100m),
+        .rst_n(rst_n),
+        .wr_full(wr_full),
+        .wr_empty(wr_empty),
+        .wr_req(wr_req),
+        .wr_data(wr_data)
+    );
+
+    FIFO	FIFO_inst (
+	.aclr ( ~rst_n ),
+	.data ( wr_data ),
+	.rdclk ( clk_out50m ),
+	.rdreq ( rd_req ),
+	.wrclk ( clk_out100m ),
+	.wrreq ( wr_req ),
+	.q      ( rd_data ),
+	.rdempty ( rd_empty ),
+	.rdfull ( rd_full ),
+	.rdusedw ( rd_usedw ),
+	.wrempty ( wr_empty ),
+	.wrfull ( wr_full ),
+	.wrusedw ( wr_usedw )
+	);
+
+endmodule

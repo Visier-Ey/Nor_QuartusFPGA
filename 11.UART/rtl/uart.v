@@ -1,0 +1,44 @@
+module uart (
+    input sys_clk,
+    input sys_rst_n,
+
+    input uart_rxd,
+    output uart_txd
+);
+
+    parameter CLK_FREQ = 50000000;               
+    parameter UART_BPS = 115200  ;       
+
+wire         uart_rx_done;    //UART接收完成信号
+wire  [7:0]  uart_rx_data;    //UART接收数据
+
+
+
+    uart_recv #(
+    .CLK_FREQ  (CLK_FREQ),
+    .UART_BPS  (UART_BPS)
+    )    
+    u_uart_recv(
+        .clk(sys_clk),
+        .rst_n(sys_rst_n),
+        .uart_rxd(uart_rxd),
+        //! data out port
+        .uart_rx_done(uart_rx_done),
+        .uart_rx_data(uart_rx_data)
+    );
+
+    uart_send #(
+    .CLK_FREQ  (CLK_FREQ),
+    .UART_BPS  (UART_BPS)
+    )    
+     u_uart_send (
+        .clk(sys_clk),
+        .rst_n(sys_rst_n),
+        //! data in port
+        .uart_tx_en(uart_rx_done),
+        .uart_tx_data(uart_rx_data),
+        //! data out port
+        .uart_txd(uart_txd),
+        .uart_tx_busy(tx_busy) 
+    );
+endmodule

@@ -1,0 +1,45 @@
+module ram_rw (
+    input clk,
+    input rst_n,
+
+    //! RAM read/write op
+    output ram_wr_en,
+    output ram_rd_en,
+    output reg [4:0] ram_addr,
+    output reg [7:0] ram_wr_data,
+    input [7:0] ram_rd_data
+);
+    reg [5:0] rw_cnt;
+
+    assign ram_wr_en = (rw_cnt >= 6'd0 && rw_cnt <= 6'd31 && rst_n) ? 1'b1 : 1'b0;
+    assign ram_rd_en = (rw_cnt >= 6'd32 && rw_cnt <= 6'd63) ? 1'b1 : 1'b0;
+
+
+    //! RAM read/write counter
+    always @(posedge clk or negedge rst_n) begin
+        if(!rst_n) begin
+            rw_cnt <= 6'd0;
+        end 
+        else begin
+            if (rw_cnt == 6'd63) rw_cnt <= 6'd0;
+            else rw_cnt <= rw_cnt + 1'b1;
+        end
+    end
+
+    //! RAM write operation
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) ram_wr_data <= 8'd0;
+        else begin
+            if (rw_cnt>=6'd0 && rw_cnt <=6'd31) 
+                ram_wr_data <= ram_wr_data +1;
+            else ram_wr_data <= 8'd0;
+        end
+    end
+
+    //! RAM read operation
+    always @(posedge clk or negedge rst_n) begin
+        if(!rst_n) ram_addr <= 5'd0;
+        else if(ram_addr==5'd31) ram_addr <= 5'd0;
+        else ram_addr <= ram_addr + 1'b1;
+    end
+endmodule

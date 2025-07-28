@@ -1,0 +1,26 @@
+module ip_pll (
+    input sys_clk,
+    input sys_rst_n,
+
+    output clk_out100m,
+    output clk_out100m_180deg,
+    output clk_out50m,
+    output clk_out25m,
+);
+    
+    wire rst_n;
+    wire locked;
+
+    assign rst_n = sys_rst_n & locked;
+
+    pll_clk	pll_clk_inst (
+	.areset ( ~sys_rst_n ),
+	.inclk0 ( sys_clk ),
+	.c0 ( clk_out100m ),
+	.c1 ( clk_out100m_180deg ),
+	.c2 ( clk_out50m ),
+	.c3 ( clk_out25m ),
+	.locked ( locked )
+	);
+
+endmodule

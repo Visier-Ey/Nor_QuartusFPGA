@@ -1,0 +1,20 @@
+module top_breath_led (
+    input sys_clk,
+    input sys_rst_n,
+    output [3:0] led
+);
+
+    wire count_down;
+
+    breath_led u_breath_led (
+        .sys_clk(sys_clk),
+        .sys_rst_n(sys_rst_n),
+        .led(led)
+        .count_down(count_down)
+    );
+    count u_count (
+        .sys_clk(sys_clk),
+        .sys_rst_n(sys_rst_n),
+        .count_down(count_down)
+    );
+endmodule

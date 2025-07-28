@@ -1,0 +1,63 @@
+module FSK (
+    input sys_clk,
+    input sys_rst_n,
+    input clk_A,
+    input clk_B,
+    input opt,
+    output ad_data
+);
+
+//! set the parameter here
+parameter CLOCK_A = 100_000_000;
+parameter CLOCK_B =  10_000_000;
+parameter SR=256;
+// *  clk/sr/freq = adj
+parameter FREQ_A = 50_000;
+parameter FREQ_B = 10_000;
+
+parameter FREQ_ADJ_A = CLOCK_A / FREQ_A / SR;
+parameter FREQ_ADJ_B = CLOCK_B / FREQ_B / SR;
+
+
+//! define the inside register
+wire [7:0] _ad_data_A;
+wire [7:0] _ad_data_B;
+wire [7:0] _rd_data_A;
+wire [7:0] _rd_data_B;
+wire [7:0] _rd_address;
+
+//! deside which is the output
+assign ad_data = opt ? _ad_data_A : _ad_data_B;
+
+    da_wave_send#(.FREQ_ADJ (FREQ_ADJ_A)) u_da_wave_send_A(
+    .clk         (sys_clk  ), 
+    .rst_n       (rst_n    ),
+    .rd_data     (_rd_data_A  ),
+    .rd_addr     (_rd_address_A  ),
+    .da_clk      (clk_A   ),  
+    .da_data     (_ad_data_A)
+    );
+
+    da_wave_send#(.FREQ_ADJ (FREQ_ADJ_B))  u_da_wave_send_B(
+    .clk         (sys_clk  ), 
+    .rst_n       (rst_n    ),
+    .rd_data     (_rd_data_B  ),
+    .rd_addr     (_rd_address_B  ),
+    .da_clk      (clk_B   ),  
+    .da_data     (_ad_data_B)
+    );
+
+    rom_256x8b	u_rom_256x8b_A (
+        .address    ( _rd_address_A ),
+        .clock      ( sys_clk ),
+        .q          ( _rd_data_A )
+    );
+
+    rom_256x8b	u_rom_256x8b_B (
+        .address    ( _rd_address_B ),
+        .clock      ( sys_clk ),
+        .q          ( _rd_data_B )
+    );
+
+
+endmodule
