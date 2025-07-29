@@ -1,0 +1,50 @@
+// Butterworth low-pass滤波器, 阶数=4, 截止=0.05π
+module butterworth_filter(
+    input clk,
+    input rst,
+    input signed [15:0] din,
+    output signed [15:0] dout
+);
+
+localparam signed [15:0] b0 = 16'sd1;
+localparam signed [15:0] b1 = 16'sd4;
+localparam signed [15:0] b2 = 16'sd6;
+localparam signed [15:0] b3 = 16'sd4;
+localparam signed [15:0] b4 = 16'sd1;
+localparam signed [15:0] a1 = 16'sd117625;
+localparam signed [15:0] a2 = 16'sd-158962;
+localparam signed [15:0] a3 = 16'sd95812;
+localparam signed [15:0] a4 = 16'sd-21725;
+
+reg signed [15:0] x[0:4];
+reg signed [15:0] y[1:4];
+
+integer i;
+always @(posedge clk or posedge rst) begin
+    if (rst) begin
+        x[0] <= 0;
+        x[1] <= 0;
+        x[2] <= 0;
+        x[3] <= 0;
+        x[4] <= 0;
+        y[1] <= 0;
+        y[2] <= 0;
+        y[3] <= 0;
+        y[4] <= 0;
+    end else begin
+        x[4] <= x[3];
+        x[3] <= x[2];
+        x[2] <= x[1];
+        x[1] <= x[0];
+        x[0] <= din;
+        y[1] <= y_temp;
+        y[4] <= y[3];
+        y[3] <= y[2];
+        y[2] <= y[1];
+    end
+end
+
+wire signed [31:0] y_temp;
+assign y_temp = x[0]*b0 + x[1]*b1 + x[2]*b2 + x[3]*b3 + x[4]*b4 + y[1]*a1 + y[2]*a2 + y[3]*a3 + y[4]*a4;
+assign dout = y_temp[30:15];
+endmodule

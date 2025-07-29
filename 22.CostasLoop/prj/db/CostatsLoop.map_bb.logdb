@@ -1,6 +1,0 @@
-v1
-DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,costas:costas_inst|lpm_mult:Mult0|mult_36t:auto_generated|mac_out2,
-DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,costas:costas_inst|lpm_mult:Mult1|mult_a8t:auto_generated|mac_out2,
-DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,costas:costas_inst|lpm_mult:Mult1|mult_a8t:auto_generated|mac_out4,
-DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,costas:costas_inst|mixer:u_mixer|lpm_mult:Mult0|mult_73t:auto_generated|mac_out2,
-DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,costas:costas_inst|mixer:u_mixer|lpm_mult:Mult1|mult_73t:auto_generated|mac_out2,

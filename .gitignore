@@ -11,7 +11,10 @@
 *.aocx
 *.summary
 *.raw
+.vscode
+Assert/
 output_files/
 db/
 incremental_db/
 simulation/
+NoCategroy/
