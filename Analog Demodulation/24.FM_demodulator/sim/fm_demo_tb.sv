@@ -44,7 +44,7 @@ module fm_demod_tb;
     real t = 0;
     real fc = 1e6;      // 1MHz载波
     real fs = 100e6;    // 100MHz采样率
-    real kf = 20e3;      // 频偏系数500kHz
+    real kf = 50e3;      // 频偏系数500kHz
     real fm = 15e3;      // 1kHz基带
     real phase = 0;     // 相位累加器
 

@@ -128,7 +128,7 @@ def verify_fir(coeffs, quantized_coeffs, coeff_max):
 
 # 示例使用
 if __name__ == "__main__":
-    num_taps = 127
+    num_taps = 15
     fs = 100e6  # 采样率 100 MHz
     cutoff_hz = 100e3  # 截止频率 100 kHz
 
@@ -136,8 +136,8 @@ if __name__ == "__main__":
     cutoff = cutoff_hz / (fs / 2)
 
     coeff_max = 65535
-    input_width = 32
-    output_width = 32
+    input_width = 8
+    output_width = 8
 
     verilog_code, quantized_coeffs, original_coeffs = generate_signed_fir(
         num_taps=num_taps,

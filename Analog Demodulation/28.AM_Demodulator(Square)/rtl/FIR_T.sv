@@ -2,7 +2,7 @@ module FIR_T (
     input sys_clk,
     input sys_rst_n,
     input [7:0]  ad_data,
-    output [13:0]  da_data
+    output [7:0]  da_data
 );
 
     wire clk;
@@ -13,7 +13,7 @@ module FIR_T (
     // FIR滤波器实例化
     FIR fir_inst (
         .clk(clk),
-        .fir_in(signal_squared),
+        .fir_in(fir_in > 0 ? fir_in : -fir_in), // 处理负数输入
         .fir_out(fir_out)
     );
 

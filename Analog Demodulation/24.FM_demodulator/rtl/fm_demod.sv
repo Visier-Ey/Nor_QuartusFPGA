@@ -15,7 +15,6 @@ module fm_demod (
     output reg signed [15:0] Q_prev,
     output wire signed [15:0] I_in,
     output wire signed [15:0] Q_in
-
 );
 
     // --- NCO: 单实例同时输出 sin / cos ---
@@ -80,7 +79,7 @@ module fm_demod (
         end else begin
             I_prev <= I_in;
             Q_prev <= Q_in;
-            demod_out <= delta_phi>>>8; // 截断为16位输出
+            demod_out <= {port[31],port[14:0]}; // 截断为16位输出
         end
     end
 
@@ -90,6 +89,5 @@ module fm_demod (
 
     FIR fir_demod (.clk(clk), .fir_in(delta_phi), .fir_out(port));
     // assign port = delta_phi;
-    //assign demod_out = demod_;
 
 endmodule
