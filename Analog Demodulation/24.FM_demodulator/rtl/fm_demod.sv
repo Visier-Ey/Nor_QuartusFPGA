@@ -79,7 +79,7 @@ module fm_demod (
         end else begin
             I_prev <= I_in;
             Q_prev <= Q_in;
-            demod_out <= {port[31],port[14:0]}; // 截断为16位输出
+            demod_out <= {port[31],port[16:2]}; // 截断为16位输出
         end
     end
 
