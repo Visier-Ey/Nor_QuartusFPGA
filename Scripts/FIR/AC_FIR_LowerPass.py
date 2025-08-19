@@ -128,7 +128,7 @@ def verify_fir(coeffs, quantized_coeffs, coeff_max):
 
 # 示例使用
 if __name__ == "__main__":
-    num_taps = 15
+    num_taps = 63
     fs = 100e6  # 采样率 100 MHz
     cutoff_hz = 100e3  # 截止频率 100 kHz
 

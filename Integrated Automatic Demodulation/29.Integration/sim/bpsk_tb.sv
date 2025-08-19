@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module costas_tb;
+module bpsk_tb;
 
 parameter CLK_PERIOD = 20;       // 50MHz时钟
 parameter CARRIER_FREQ = 1e6;   
@@ -9,19 +9,15 @@ parameter CYCLES_PER_JUMP = 100;   // 每2个完整周期跳变一次
 reg clk;
 reg rst;
 reg [7:0] rx_signal;
-wire signed [15:0] I_out, Q_out;
 wire [7:0] da_data;
-wire da_clk;
 
-
-costas uut (
+Integration uut (
     .sys_clk(clk),
     .sys_rst_n(rst),
-    .ad_data(rx_signal),
-    .I_out(I_out),
-    .Q_out(Q_out),
-    .da_data(da_data),
-    .da_clk(da_clk)
+    .d_in(rx_signal),
+    .mode_select(2'b01),
+    .d_out(da_data),
+    .status_led()
 );
 
 // 时钟生成
@@ -40,7 +36,7 @@ initial begin
     
     generate_bpsk_with_phase_jumps();
     #2000000; // 仿真2ms
-    // $finish;
+    $finish;
 end
 
 // 完整周期相位跳变信号生成

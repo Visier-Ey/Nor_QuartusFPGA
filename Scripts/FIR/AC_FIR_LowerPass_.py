@@ -109,10 +109,10 @@ def verify_fir(coeffs, quantized_coeffs, coeff_max):
 
 # 示例使用
 if __name__ == "__main__":
-    num_taps = 127
-    cutoff = 0.01  # 0.001 × π
+    num_taps = 63
+    cutoff = 0.001  # 0.001 × π
     coeff_max = 32767
-    input_width = 8
+    input_width = 16
 
     verilog_code, quantized_coeffs, original_coeffs = generate_signed_fir(
         num_taps=num_taps,

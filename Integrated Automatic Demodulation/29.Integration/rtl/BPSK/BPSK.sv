@@ -1,12 +1,8 @@
-module costas (
-    input sys_clk,          
-    input sys_rst_n,             
-    input [7:0] ad_data,  
-    output signed [15:0] I_out, 
-    output signed [15:0] Q_out,     
-    output signed [7:0] da_data,    
-    output da_clk,         
-    output ad_clk
+module BPSK (
+    input clk,          
+    input rst_n,             
+    input [7:0] d_in,     
+    output signed [7:0] d_out
 );  
     // ! ================================ Some Brief Here ================================  
 
@@ -15,36 +11,17 @@ module costas (
 
     // ! ============================= Global Parameter Here =============================
 
-    // * PLL
-    wire locked;
-    wire clk_100m;
-    wire clk_30m;
-    wire clk_400m;
-    pll pll_inst (
-        .areset ( ~sys_rst_n ),
-        .inclk0 ( sys_clk ),
-        .c0 ( clk_100m ),
-        .c1 ( clk_30m ),
-        .c2 ( clk_400m ),
-        .locked ( locked )
-    );
-
     // * System Clock and Reset
     wire SysClk;
     wire FirClk;
     wire NcoClk;
-    wire _da_clk;
-    wire _ad_clk;
-    assign rst = sys_rst_n & locked;
-    assign SysClk = clk_100m;
-    assign FirClk = clk_100m;
-    assign NcoClk = clk_100m;
-    assign _da_clk = clk_100m;
-    assign _ad_clk = clk_100m;
+    assign SysClk = clk;
+    assign FirClk = clk;
+    assign NcoClk = clk;
     
     // * AD DA
     wire signed [7:0] _ad_data;
-    assign _ad_data = ad_data; 
+    assign _ad_data = d_in - 128; 
 
     // * NCO
     wire signed [7:0] nco_sin, nco_cos; 
@@ -76,7 +53,7 @@ module costas (
     // --- 1. 正交下变频（8-bit Mixer） ---    
     mixer u_mixer (
         .clk(SysClk),
-        .rst(rst),
+        .rst_n(rst_n),
         .adc_data(_ad_data),
         .nco_sin(nco_sin),  
         .nco_cos(nco_cos),  
@@ -87,13 +64,13 @@ module costas (
     //--- 2. 低通滤波（优化为8-bit输入） ---
     FIR16 fir_I (
         .clk(FirClk),
-        .fir_in(I_mix), 
+        .fir_in(I_mix>>>8), 
         .fir_out(_I_filtered)
     );
     
     FIR16 fir_Q (
         .clk(FirClk),
-        .fir_in(Q_mix), 
+        .fir_in(Q_mix>>>8), 
         .fir_out(_Q_filtered)
     );
 
@@ -101,8 +78,8 @@ module costas (
     reg [6:0] delay_cnt;
     reg valid;
 
-    always @(posedge SysClk or negedge rst) begin
-        if (!rst) begin
+    always @(posedge SysClk or negedge rst_n) begin
+        if (!rst_n) begin
             delay_cnt <= 0;
             valid <= 0;
         end else begin
@@ -116,10 +93,10 @@ module costas (
 
     // --- 4. 环路滤波 ---
     loop_filter#(
-        .INIT_FREQ(32'd42_949_673)
+        .INIT_FREQ(32'd42949673)
     ) u_loop_filter (
         .clk(SysClk),
-        .rst(rst),    
+        .rst_n(rst_n),    
         .valid(valid), 
         .phase_error(phase_error),  
         .freq_ctrl(fwc)
@@ -131,17 +108,17 @@ module costas (
         .BASE_PHASE(0)
     ) ncoSin (
         .clk(NcoClk),
-        .reset_n(rst),
+        .reset_n(rst_n),
         .phi_inc_i(phase_adj), 
         .nco_out(_nco_sin), 
         .out_valid()
     );
 
     _NCO #(
-        .BASE_PHASE(32'h4000_0000) // * 90deg flipped
+        .BASE_PHASE(32'h4000_0000) // * 180deg flipped
     ) ncoCos (
         .clk(NcoClk),
-        .reset_n(rst),
+        .reset_n(rst_n),
         .phi_inc_i(phase_adj), 
         .nco_out(_nco_cos),
         .out_valid()
@@ -149,10 +126,5 @@ module costas (
 
   // ! ============================= Output Port Here =============================
 
-    assign I_out = I_filtered;
-    assign Q_out = Q_filtered;
-
-    assign ad_clk = _ad_clk;
-    assign da_clk = _da_clk;
-    assign da_data = (I_filtered >>> 8);
+    assign d_out = (I_filtered >>> 8);
 endmodule

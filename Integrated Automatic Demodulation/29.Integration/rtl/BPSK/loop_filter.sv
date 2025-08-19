@@ -1,6 +1,6 @@
 module loop_filter (
     input clk,
-    input rst,                // 异步复位（低电平有效）
+    input rst_n,                // 异步复位（低电平有效）
     input valid,              // 使能信号
     input signed [31:0] phase_error,  // 鉴相器输出的15位误差信号
     output reg signed [31:0] freq_ctrl // 输出给NCO的频率控制字
@@ -16,8 +16,8 @@ module loop_filter (
     reg signed [31:0] integrator;  // 积分器累加值
     reg signed [31:0] prop_term;   // 比例项
 
-    always @(posedge clk or negedge rst) begin
-        if (!rst) begin
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
             // 异步复位
             integrator <= INIT_FREQ;
             prop_term  <= 0;
@@ -28,7 +28,7 @@ module loop_filter (
             prop_term <= phase_error >>> Kp;
 
             // 积分项计算（累加相位误差 * Ki）
-           // integrator <= integrator + (phase_error >>> Ki);
+            //integrator <= integrator + (phase_error >>> Ki);
 
             // 总频率控制字 = 比例项 + 积分项
             freq_ctrl <= prop_term + integrator;
